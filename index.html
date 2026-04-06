@@ -160,6 +160,15 @@
         <p class="section-desc"><span data-ar>نماذج من المشاريع التي نفذناها بنجاح مع كبرى الشركات في المملكة</span><span data-en>Examples of projects we have successfully executed with major companies in the Kingdom</span></p>
       </div>
       <div class="projects-grid" id="projectsGrid"></div>
+
+      <!-- New Gallery Section -->
+      <div class="projects-gallery-header animate fade-up" style="margin-top: 60px; text-align: center;">
+        <h3 class="section-title" style="font-size: 1.8rem;">
+          <span data-ar>معرض صور المشاريع والعمل الميداني</span>
+          <span data-en>Projects Photo Gallery & Field Work</span>
+        </h3>
+      </div>
+      <div class="projects-gallery-grid" id="projectsGalleryGrid"></div>
     </div>
   </section>
 
@@ -285,9 +294,32 @@
   </a>
 
   <!-- Back to Top -->
+  <!-- Back to Top -->
   <button class="back-to-top" id="backToTop" aria-label="Back to top">
     <svg viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
   </button>
+
+  <!-- ===== Lightbox Gallery ===== -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-overlay" onclick="closeLightbox()"></div>
+    <div class="lightbox-content">
+      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close Gallery">&times;</button>
+      
+      <div class="lightbox-image-container">
+        <img id="lightboxImg" src="" alt="Project Image">
+      </div>
+      <div class="lightbox-info">
+        <p id="lightboxCounter"></p>
+      </div>
+
+      <button class="lightbox-nav prev" id="prevBtn" onclick="changeImage(-1)" aria-label="Previous image">
+        <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="lightbox-nav next" id="nextBtn" onclick="changeImage(1)" aria-label="Next image">
+        <svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
 
   <script>
     // ============================================================
@@ -305,16 +337,20 @@
         { img: 'service-cleaning', ar: 'تنظيف وتهيئة المواقع', en: 'Site Cleaning & Preparation', descAr: 'تنظيف وتهيئة المواقع الإنشائية وإزالة المخلفات وتسوية الأراضي للبناء', descEn: 'Construction site cleaning, debris removal and land leveling for building' }
       ],
       projects: [
-        { ar: 'برج تعزيز - كورنيش الدمام', en: 'Taaziz Tower - Dammam Corniche' },
-        { ar: 'مجمع الفلك - الخبر', en: 'Al-Falak Complex - Al-Khobar' },
-        { ar: 'مجمع سكني الشبيلي', en: 'Al-Shubaili Residential Complex' },
-        { ar: 'برج W - الخبر', en: 'W Tower - Al-Khobar' },
-        { ar: 'برج دايموند - الجبر', en: 'Diamond Tower - Al-Jubr' },
-        { ar: 'مخطط إثراء السكني - الخبر', en: 'Ithraa Residential Plan - Al-Khobar' },
-        { ar: 'مجمع نساج السكني - الخبر', en: 'Nassaj Residential Complex - Al-Khobar' },
-        { ar: 'مجمع العثمان السكني - الخبر', en: 'Al-Othman Residential - Al-Khobar' },
-        { ar: 'أرض ياطيور - الراكة الخبر', en: 'Ya Toyour Land - Al-Rakah Al-Khobar' },
-        { ar: 'برج الخنيني', en: 'Al-Khunayni Tower' }
+        { img: '1.jpeg', ar: 'برج تعزيز - كورنيش الدمام', en: 'Taaziz Tower - Dammam Corniche' },
+        { img: '2.jpeg', ar: 'مجمع الفلك - الخبر', en: 'Al-Falak Complex - Al-Khobar' },
+        { img: '3.jpeg', ar: 'مجمع سكني الشبيلي', en: 'Al-Shubaili Residential Complex' },
+        { img: '4.jpeg', ar: 'برج W - الخبر', en: 'W Tower - Al-Khobar' },
+        { img: '5.jpeg', ar: 'برج دايموند - الجبر', en: 'Diamond Tower - Al-Jubr' },
+        { img: '6.jpeg', ar: 'مخطط إثراء السكني - الخبر', en: 'Ithraa Residential Plan - Al-Khobar' },
+        { img: '7.jpeg', ar: 'مجمع نساج السكني - الخبر', en: 'Nassaj Residential Complex - Al-Khobar' },
+        { img: '8.jpeg', ar: 'مجمع العثمان السكني - الخبر', en: 'Al-Othman Residential - Al-Khobar' },
+        { img: '9.jpeg', ar: 'أرض ياطيور - الراكة الخبر', en: 'Ya Toyour Land - Al-Rakah Al-Khobar' },
+        { img: '10.jpeg', ar: 'برج الخنيني', en: 'Al-Khunayni Tower' },
+        { img: '11.jpeg', ar: 'مشروع تطوير البنية التحتية', en: 'Infrastructure Development Project' },
+        { img: '12.jpeg', ar: 'أعمال الحفر والردم', en: 'Excavation & Backfilling' },
+        { img: '13.jpeg', ar: 'تجهيز الموقع الإنشائي', en: 'Construction Site Preparation' },
+        { img: '14.jpeg', ar: 'إسناد التربة وتدعيمها', en: 'Soil Shoring & Support' }
       ],
       clients: [
         { logo: 'logo-alhaqeet.png', ar: 'شركة مجموعة الحقيط', en: 'Al-Haqeet Group' },
@@ -359,16 +395,45 @@
       `).join('');
     }
 
-    /** Render Projects Grid */
+    /** Render Projects & Gallery Grid */
     function renderProjects() {
       const grid = document.getElementById('projectsGrid');
-      if (!grid) return;
-      grid.innerHTML = DATA.projects.map((p, i) => `
-        <article class="project-card animate fade-up" style="animation-delay:${(i + 1) * 0.05}s">
-          <span class="project-num">${String(i + 1).padStart(2, '0')}</span>
-          <h3>${biSpan(p.ar, p.en)}</h3>
-        </article>
-      `).join('');
+      const galleryGrid = document.getElementById('projectsGalleryGrid');
+      
+      if (grid) {
+        grid.innerHTML = DATA.projects.map((p, i) => `
+          <article class="project-card animate fade-up" style="animation-delay:${(i + 1) * 0.05}s">
+            <span class="project-num">${String(i + 1).padStart(2, '0')}</span>
+            <h3>${biSpan(p.ar, p.en)}</h3>
+          </article>
+        `).join('');
+      }
+
+      if (galleryGrid) {
+        // Define a layout pattern for the 14 images to create a Bento-style mosaic
+        const layoutPattern = [
+          'large', 'tall', 'norm', 'norm', 
+          'wide', 'norm', 'tall', 'large', 
+          'norm', 'wide', 'tall', 'norm', 
+          'norm', 'norm'
+        ];
+
+        galleryGrid.innerHTML = DATA.projects.map((p, i) => {
+          const layoutClass = layoutPattern[i % layoutPattern.length];
+          return `
+            <article class="gallery-item animate scale-in ${layoutClass}" style="animation-delay:${(i + 1) * 0.05}s" onclick="openLightbox(${i})">
+              <div class="gallery-image">
+                <img src="images/projects/${p.img}" alt="Field Work" loading="lazy">
+                <div class="gallery-overlay">
+                  <div class="gallery-icon">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
     }
 
     /** Render Clients Slider (with duplication for infinite scroll) */
@@ -476,6 +541,82 @@
         ? `مرحباً، أنا ${name}\nرقم الجوال: ${phone}\n\n${msg}`
         : `Hello, I'm ${name}\nPhone: ${phone}\n\n${msg}`;
       window.open(`https://wa.me/966503868419?text=${encodeURIComponent(waMsg)}`, '_blank');
+    }
+
+    // ============================================================
+    // ===== LIGHTBOX LOGIC =======================================
+    // ============================================================
+    let currentProjectIndex = 0;
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+
+    function openLightbox(index) {
+      currentProjectIndex = index;
+      updateLightboxContent();
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden'; // Prevent scroll
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = ''; // Restore scroll
+    }
+
+    function changeImage(step) {
+      currentProjectIndex += step;
+      if (currentProjectIndex >= DATA.projects.length) currentProjectIndex = 0;
+      if (currentProjectIndex < 0) currentProjectIndex = DATA.projects.length - 1;
+      updateLightboxContent();
+    }
+
+    function updateLightboxContent() {
+      const p = DATA.projects[currentProjectIndex];
+      
+      lightboxImg.style.opacity = '0';
+      setTimeout(() => {
+        lightboxImg.src = `images/projects/${p.img}`;
+        lightboxCounter.textContent = `${currentProjectIndex + 1} / ${DATA.projects.length}`;
+        lightboxImg.style.opacity = '1';
+      }, 200);
+    }
+
+    // Keybindings: ESC to close, arrows to navigate
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') document.body.getAttribute('data-lang') === 'ar' ? changeImage(-1) : changeImage(1);
+      if (e.key === 'ArrowLeft') document.body.getAttribute('data-lang') === 'ar' ? changeImage(1) : changeImage(-1);
+    });
+
+    // Swipe Support for Lightbox
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    lightbox.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      const threshold = 50;
+      const lang = document.body.getAttribute('data-lang');
+      const diff = touchEndX - touchStartX;
+      
+      if (Math.abs(diff) > threshold) {
+        if (diff > 0) { // Swipe Right
+          lang === 'ar' ? changeImage(1) : changeImage(-1);
+        } else { // Swipe Left
+          lang === 'ar' ? changeImage(-1) : changeImage(1);
+        }
+      }
     }
   </script>
 </body>
